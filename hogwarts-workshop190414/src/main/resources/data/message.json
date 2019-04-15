@@ -1,0 +1,11 @@
+{
+  "touser" : "{{to}}",
+  "toparty" : "",
+  "totag" : "",
+  "msgtype" : "",
+  "agentid" : 1,
+  "text" : {
+    "content" : "{{msg}}"
+  },
+  "safe":0
+}
