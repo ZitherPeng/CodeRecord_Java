@@ -66,7 +66,7 @@ public class DemoTest {
             "测试中文",
             "おはようございます",
             "<script>alert(77)</script>",
-            "欢迎大家加入TesterHome技术Workshop <a href=\"https://testerhome.com\">TesterHomne社区论坛</a>" })
+            "欢迎大家加入Luckycoding <a href=\"https://testerhome.com\">TesterHomne社区论坛</a>" })
     @Test
     void sendMessage2(String msg) {
         HashMap<String, Object> data = new HashMap<String, Object>();

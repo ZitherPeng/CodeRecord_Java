@@ -4,8 +4,8 @@ package hogwarts.workshop.util;
 import static io.restassured.RestAssured.given;
 
 public class Config {
-    public String corpid = "xxx";
-    public String corpsecret = "xxx";
+    public String corpid = "ww768ab599d84d8428";
+    public String corpsecret = "NlYG78ns8zK1ZPLlHI3f1Ir39Kqqh0xqCnTLbC9VU8E";
     public Integer agentid = 1000002;
     public String access_token;
 
