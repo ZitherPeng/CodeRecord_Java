@@ -4,9 +4,7 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
@@ -14,7 +12,9 @@ import static io.restassured.RestAssured.given;
 public class Message {
 
     /**
-     * send 基础实现
+     * send HashMap body
+     * @param data HashMap<String ,Object>
+     * @return Response
      */
     public Response send(HashMap<String ,Object> data){
         return given()
@@ -30,21 +30,48 @@ public class Message {
     }
 
     /**
-     * 模版生成 data
+     * send HashMap body
+     * @param sBody body data type of String
+     * @param url host and path
+     * @return Response
      */
-    public Response send (String to,String msg) throws IOException {
-        Writer writer = new OutputStreamWriter(System.out);
-        HashMap<String,Object> data = new HashMap<String, Object>();
-        data.put("to","@all");
-        data.put("msg","你的快递已到");
-        new DefaultMustacheFactory().compile("data/message.json").execute(writer,data);
-        writer.flush();
-        return send(data);
-    }
-    public void send (String data){
-        given()
+    public Response send(String url,String sBody){
+        return given()
                 .log().all()
-                .queryParam("access_token",Config.getInstance().access_token);
+                .queryParam("access_token", Config.getInstance().access_token)
+                .contentType(ContentType.JSON)
+                .body(sBody)
+                .when()
+                .post(url)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
+
+    /**
+     * send request by template generate
+     */
+    public Response send (String touser,String testcontent,Integer agentid){
+        HashMap<String,Object> data = new HashMap<String, Object>();
+        data.put("touser",touser);
+        data.put("testcontent",testcontent);
+        data.put("agentid",agentid);
+        String sBody = template("data/message.json",data);
+        Response response = send("https://qyapi.weixin.qq.com/cgi-bin/message/send",sBody);
+        return response;
+    }
+
+
+
+    /**
+     * template generate method
+     */
+    String template(String path,HashMap<String,Object> data){
+        Writer writer = new StringWriter();
+        new DefaultMustacheFactory().compile(path).execute(writer,data);
+        return writer.toString();
 
     }
+
 }

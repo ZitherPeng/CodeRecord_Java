@@ -1,6 +1,7 @@
 package hogwarts.workshop;
 
 import com.github.mustachejava.DefaultMustacheFactory;
+import hogwarts.workshop.util.Config;
 import hogwarts.workshop.util.Message;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
@@ -86,21 +87,11 @@ public class DemoTest {
     }
 
 
+
     @Test
     void sendMessage3() {
-        HashMap<String, Object> data = new HashMap<String, Object>();
-        data.put("touser", "@all");
-        data.put("toparty", "");
-        data.put("totag", "");
-        data.put("msgtype", "text");
-        data.put("agentid", "1000002");
-        HashMap<String, Object> content = new HashMap<String, Object>();
-        content.put("content", "你的快递已到");
-        data.put("text", content);
-        data.put("safe", 0);
-
         Message message = new Message();
-        message.send(data).then().body("errcode", equalTo(0));
+        message.send("@all","你好呀", Config.getInstance().agentid).then().body("errcode", equalTo(0));
 
     }
 
