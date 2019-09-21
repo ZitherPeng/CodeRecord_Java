@@ -24,7 +24,6 @@ public class Config {
         return config;
     }
 
-
     private String getToken() {
         return given()
                 .log().all()
