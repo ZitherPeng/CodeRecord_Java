@@ -15,6 +15,7 @@ public class FlyPig implements Serializable {
         return AGE;
     }
 
+
     public static void setAGE(String AGE) {
         FlyPig.AGE = AGE;
     }
