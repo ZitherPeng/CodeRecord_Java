@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <bean id="textEditor" class="com.luckycoding.di.TextEditor" p:spellChecker-ref="spellChecker">
+        <constructor-arg ref="spellChecker"></constructor-arg>
+        <constructor-arg index="1" value=" lucky coding"></constructor-arg>
+        <!--        <property name="spellChecker" ref="spellChecker"></property>-->
+    </bean>
+
+    <bean id="spellChecker" class="com.luckycoding.di.SpellChecker">
+    </bean>
+
+    <bean id="outerBean" class="com.luckycoding.HelloWorld">
+        <property name="message">
+            <bean id="innerBean" class="java.lang.String"></bean>
+            <!--   这个内部 bean 可以给初始值？         -->
+        </property>
+    </bean>
+
+
+    <bean id="javaCollection" class="com.luckycoding.di.JavaCollection">
+        <property name="list">
+            <list>
+                <value>123</value>
+                <ref bean="spellChecker"></ref>
+            </list>
+        </property>
+
+        <property name="properties">
+            <props>
+                <prop key="a">1</prop>
+            </props>
+        </property>
+
+        <property name="map">
+            <map>
+                <entry key="a" value="1"></entry>
+                <entry key-ref="outerBean" value-ref="spellChecker"></entry>
+            </map>
+        </property>
+
+        <property name="set">
+            <set>
+                <value>"a"</value>
+                <value>"a"</value>
+                <ref bean="spellChecker"></ref>
+                <ref bean="spellChecker"></ref>
+            <!--    set 的值唯一  是否可注入, 结果： ["a", com.luckycoding.di.SpellChecker@21213b92] -->
+            </set>
+        </property>
+    </bean>
+
+</beans>

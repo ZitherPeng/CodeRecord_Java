@@ -13,4 +13,16 @@
         <property name="message" value="Zither Peng"></property>
     </bean>
 
+    <bean id="helloParent" class="com.luckycoding.inherit.HelloParent" abstract="true">
+        <property name="message1" value="father"></property>
+        <property name="message2" value="mother"></property>
+    </bean>
+
+    <bean id="helloChild" class="com.luckycoding.inherit.HelloChild" parent="helloParent">
+        <property name="message1" value="child1"></property>
+        <property name="message3" value="child3"></property>
+    </bean>
+
+<!--    <bean class="com.luckycoding.loC.InitExampleBean"></bean>-->
+
 </beans>
