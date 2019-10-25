@@ -6,16 +6,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
-    <!--    provider 应用名称，用于依赖跟踪 -->
-    <dubbo:application name="echo-provider"/>
+    <!--    服务消费方应用，依赖跟踪 -->
+    <dubbo:application name="echo-consumer"/>
 
     <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
 
-    <!--    只用 dubbo 协议且指定监听 20880 端口 -->
-    <dubbo:protocol name="dubbo" port="20880"/>
-
-    <bean id="echoService" class="com.luckycoding.dubbo.samples.echo.impl.EchoServiceImpl"/>
-
-    <dubbo:service interface="com.luckycoding.dubbo.samples.echo.api.EchoService" ref="echoService"/>
-
+    <!--    需要消费的服务 -->
+    <dubbo:reference id="echoService" check="false"
+                     interface="com.luckycoding.dubbo.samples.echo.api.EchoService"/>
 </beans>
